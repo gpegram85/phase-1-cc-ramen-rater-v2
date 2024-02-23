@@ -2,6 +2,8 @@
 
 // Callbacks
 
+
+// Function to display ramens in the ramen-menu div.
 const displayRamens = () => {
 
   fetch(`http://localhost:3000/ramens`)
@@ -52,8 +54,9 @@ const displayRamenDetails = (ramen) => {
 // Function to update displayed ramen and target selected for delete request.
 // Could do with a better way to target for deletion but works just to show successful DELETE request.
 // Passes the currently selected ramen into the ramen update handler.
+// Inelegant solution but it works for now.
 const handleClick = (ramen) => {
-  // Add code
+
   currentRamen = ramen
 
   displayRamenDetails(ramen)
@@ -65,6 +68,8 @@ const handleClick = (ramen) => {
   handleUpdateRamen(currentRamen)
 }
 
+
+// Function to effect a delete on currently selected ramen
 const handleDeleteRequest = (ramen) => {
     fetch(`http://localhost:3000/ramens/${ramen.id}`, {
     method: 'DELETE'
@@ -79,12 +84,13 @@ const handleDeleteRequest = (ramen) => {
       location.reload()
     })
     .catch(error => {
-      console.log("Error deleting ramen: ", error);
+      alert("Error deleting ramen: ", error);
     })
 }
 
-const addSubmitListener = () => {
-  // Add code
+
+// Function to effect a new ramen addition
+const handleNewRamen = () => {
 
   const addRamenBtn = document.getElementById('submit-button')
   addRamenBtn.addEventListener('click', (e) => {
@@ -135,6 +141,7 @@ const addSubmitListener = () => {
   })
 }
 
+// Function to update currently selected ramen's rating and comment
 const handleUpdateRamen = (currentRamen) => {
   const updateRamenBtn = document.getElementById('update-button')
 
@@ -168,7 +175,7 @@ const handleUpdateRamen = (currentRamen) => {
       }
     })
     .catch(error => {
-      alert('Error updating ramen: ' + error);
+      alert('Error updating ramen: ' + error)
     })
     updateRamenBtn.removeEventListener('click', updateRamenHandler)
   }
@@ -176,10 +183,11 @@ const handleUpdateRamen = (currentRamen) => {
 }
 
 const main = () => {
-  // Invoke displayRamens here
+  // Invoke displayRamens
   displayRamens()
-  // Invoke addSubmitListener here
-  addSubmitListener()
+  // Invoke submit button listener
+  handleNewRamen()
+  //  Invoke ramen updater
   handleUpdateRamen(currentRamen)
 }
 
@@ -188,7 +196,7 @@ main()
 // Export functions for testing
 export {
   displayRamens,
-  addSubmitListener,
+  handleNewRamen,
   handleClick,
   main,
 };
